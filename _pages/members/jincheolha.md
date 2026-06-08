@@ -1,4 +1,5 @@
 #### Jincheol Ha (하진철)
+
 **Assistant Professor, Soongsil University**
 <br>
 **Affiliation**: School of AI & Software

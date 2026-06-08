@@ -1,2 +1,2 @@
-* Alumni1, description.
-* Alumni2, description.
+- Alumni1, description.
+- Alumni2, description.
