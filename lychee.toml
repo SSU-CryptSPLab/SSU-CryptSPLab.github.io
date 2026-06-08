@@ -1,0 +1,12 @@
+# lychee.toml
+
+exclude_path = [
+    "README.md",
+    "SEO.md",
+    "CUSTOMIZE.md",
+    "FAQ.md",
+    "QUICKSTART.md",
+    "assets/css/academicons.min.css",
+    "assets/css/mdb.min.css",
+    "assets/css/scholar-icons.css",
+]

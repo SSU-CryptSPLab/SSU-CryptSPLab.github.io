@@ -4,32 +4,78 @@ layout: page
 <div class="post">
   <article>
     {% if page.profiles %}
-      {% for profile in page.profiles %}
-        <hr>
-        <div class="profile float-{% if profile.align == 'left' %}left{% else %}right{% endif %}">
-          {% if profile.image %}
-            {% assign profile_image_path = profile.image | prepend: 'assets/img/' %}
-            {% if profile.image_circular %}
-              {% assign profile_image_class = 'img-fluid z-depth-1 rounded-circle' %}
-            {% else %}
-              {% assign profile_image_class = 'img-fluid z-depth-1 rounded' %}
-            {% endif %}
-            {% capture sizes %}(min-width: {{ site.max_width }}) {{ site.max_width | minus: 30 | times: 0.3}}px, (min-width: 576px) 30vw, 95vw"{% endcapture %}
-            {% include figure.liquid loading="eager" path=profile_image_path class=profile_image_class sizes=sizes alt=profile.image %}
-          {% endif %}
-          {% if profile.more_info %}
-            <div class="more-info">{{ profile.more_info }}</div>
-          {% endif %}
-        </div>
+      {% assign role_order = "Professor|Ph.D. Students|Master's Students|Undergraduate Students|Alumni" | split: '|' %}
+      {% for current_role in role_order %}
+        {% assign group_members = page.profiles | where: 'role', current_role %}
+        {% if group_members.size > 0 %}
+          {% comment %} <h2 class="category mt-5 mb-3 text-capitalize" style="border-bottom: 1px solid var(--global-divider-color); padding-bottom: 8px;"> {% endcomment %}
+          <h2 class="category mt-5 mb-3 text-capitalize" style="padding-bottom: 8px;">
+            {{ current_role }}
+          </h2>
 
-        <div class="clearfix">
-          {% if profile.content %}
-            {% capture profile_content %}{% include_relative {{ profile.content }} %}{% endcapture %}
-            {{ profile_content | markdownify }}
-          {% else %}
-            {{ content }}
-          {% endif %}
-        </div>
+          {% for profile in group_members %}
+            <hr>
+            <div class="profile float-{% if profile.align == 'left' %}left{% else %}right{% endif %}" style="width: 20% !important;">
+              {% if profile.image %}
+                {% assign profile_image_path = profile.image | prepend: 'assets/img/' %}
+                {% if profile.image_circular %}
+                  {% assign profile_image_class = 'img-fluid z-depth-1 rounded-circle' %}
+                {% else %}
+                  {% assign profile_image_class = 'img-fluid z-depth-1 rounded' %}
+                {% endif %}
+                {% capture sizes %}(min-width: {{ site.max_width }}) {{ site.max_width | minus: 30 | times: 0.3}}px, (min-width: 576px) 20vw, 95vw"{% endcapture %}
+                {% include figure.liquid loading="eager" path=profile_image_path class=profile_image_class sizes=sizes style=custom_style alt=profile.image %}
+              {% endif %}
+              {% if profile.more_info %}
+                <div class="more-info">{{ profile.more_info }}</div>
+              {% endif %}
+
+              <div class="profile-social-links" style="text-align: center; margin-top: 10px; font-size: 1.1rem;">
+                {% if profile.github %}
+                  <a href="{{ profile.github }}" target="_blank" title="GitHub" style="margin: 0 6px; color: var(--global-text-color);"
+                    ><i class="fab fa-github"></i
+                  ></a>
+                {% endif %}
+
+                {% if profile.email %}
+                  <a href="mailto:{{ profile.email }}" title="Email" style="margin: 0 6px; color: var(--global-text-color);"
+                    ><i class="fas fa-envelope"></i
+                  ></a>
+                {% endif %}
+
+                {% if profile.scholar %}
+                  <a href="{{ profile.scholar }}" target="_blank" title="Google Scholar" style="margin: 0 6px; color: #4285f4;"
+                    ><i class="ai ai-google-scholar"></i
+                  ></a>
+                {% endif %}
+
+                {% if profile.orcid %}
+                  {% if profile.orcid contains 'orcid.org/' %}
+                    {% assign orcid_url = profile.orcid %}
+                  {% else %}
+                    {% assign orcid_url = profile.orcid | prepend: 'https://orcid.org/' %}
+                  {% endif %}
+                  <a href="{{ orcid_url }}" target="_blank" title="ORCID" style="margin: 0 6px; color: #A6CE39;"><i class="ai ai-orcid"></i></a>
+                {% endif %}
+
+                {% if profile.linkedin %}
+                  <a href="{{ profile.linkedin }}" target="_blank" title="LinkedIn" style="margin: 0 6px; color: #0077b5;"
+                    ><i class="fab fa-linkedin"></i
+                  ></a>
+                {% endif %}
+              </div>
+            </div>
+
+            <div class="clearfix">
+              {% if profile.content %}
+                {% capture profile_content %}{% include_relative {{ profile.content }} %}{% endcapture %}
+                {{ profile_content | markdownify }}
+              {% else %}
+                {{ content }}
+              {% endif %}
+            </div>
+          {% endfor %}
+        {% endif %}
       {% endfor %}
     {% endif %}
   </article>
