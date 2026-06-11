@@ -27,7 +27,7 @@ latest_posts:
   limit: 3 # leave blank to include all the blog posts
 ---
 
-Our lab studies privacy-preserving technologies, especially for homomorphic encryption, and symmetric-key primitives related to them.
+CryptoSPLab (Cryptography for Security & Privacy Lab) studies privacy-preserving technologies, especially for homomorphic encryption, and symmetric-key primitives related to them.
 
 **Homomorphic Encryption**
 
